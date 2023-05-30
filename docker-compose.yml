@@ -11,13 +11,13 @@ services:
     command: python manage.py runserver 0.0.0.0:8000
     environment:
       SECRET_KEY: ${{ secrets.SECRET_KEY }}
-      DB_NAME: "etu_flow"
-      DB_USER: "zhva"
-      DB_PASSWORD: "q123"
-      DB_HOST: "db"
-      DB_PORT: "5432"
-      REDIS_HOST: "127.0.0.1"
-      REDIS_PORT: "6379"
+      DB_NAME: ${{secrets.DB_NAME}}
+      DB_USER: ${{secrets.DB_USER}}
+      DB_PASSWORD: ${{secrets.DB_PASSWORD}}
+      DB_HOST: ${{secrets.DB_HOST}}
+      DB_PORT: ${{secrets.DB_PORT}}
+      REDIS_HOST: ${{secrets.REDIS_HOST}}
+      REDIS_PORT: ${{secrets.REDIS_PORT}}
     depends_on:
       - db
     volumes:
@@ -28,10 +28,10 @@ services:
     image: postgres:13.4-buster
     restart: always
     environment:
-      POSTGRES_USER: "zhva"
-      POSTGRES_PORT: "5432"
-      POSTGRES_PASSWORD: "q123"
-      POSTGRES_DB: etu_flow
+      POSTGRES_USER: ${{secrets.POSTGRES_USER}}
+      POSTGRES_PORT: ${{secrets.POSTGRES_PORT}}
+      POSTGRES_PASSWORD: ${{secrets.POSTGRES_PASSWORD}}
+      POSTGRES_DB: ${{secrets.POSTGRES_DB}}
     volumes:
       - ./volumes/postgres_data:/var/lib/postgresql/data
 
