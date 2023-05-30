@@ -1,0 +1,38 @@
+version: "3"
+
+services:
+
+  backend-api:
+    image: zhuratown/etu_flow:latest
+    restart: always
+    container_name: etu_flow-api
+    ports:
+      - "8000:8000"
+    command: python manage.py runserver 0.0.0.0:8000
+    environment:
+      SECRET_KEY: ${{ secrets.SECRET_KEY }}
+      DB_NAME: "etu_flow"
+      DB_USER: "zhva"
+      DB_PASSWORD: "q123"
+      DB_HOST: "db"
+      DB_PORT: "5432"
+      REDIS_HOST: "127.0.0.1"
+      REDIS_PORT: "6379"
+    depends_on:
+      - db
+    volumes:
+      - ./volumes/etu_flow_media:/media
+
+  db:
+    container_name: etu_flow-db
+    image: postgres:13.4-buster
+    restart: always
+    environment:
+      POSTGRES_USER: "zhva"
+      POSTGRES_PORT: "5432"
+      POSTGRES_PASSWORD: "q123"
+      POSTGRES_DB: etu_flow
+    volumes:
+      - ./volumes/postgres_data:/var/lib/postgresql/data
+
+
